@@ -6,10 +6,16 @@ import {
   Box,
   InputBase,
   Badge,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 
-import MailIcon from '@mui/icons-material/Mail';
+import {useState} from 'react'
+
+import MailIcon from "@mui/icons-material/Mail";
 import SendIcon from "@mui/icons-material/Send";
+import Notifications from "@mui/icons-material/Notifications";
+// import Avatar from "@mui/icons-material";
 
 const StyledToolBar = styled(Toolbar)({
   display: "flex",
@@ -22,11 +28,11 @@ const Search = styled("div")(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   width: "40%",
 }));
-const Icons = styled(Box)(({ theme }) => ({
-  backgroundColor: "white",
-}));
+const Icons = styled(Box)(({ theme }) => ({ display: "flex", gap: "20px" }));
+const UserBox = styled(Box)(({ theme }) => ({ display: "flex", gap: "10px" }));
 
 function Navbar() {
+  const [open, setOpen] = useState(false)
   return (
     <AppBar position="sticky">
       <StyledToolBar>
@@ -39,11 +45,38 @@ function Navbar() {
           <InputBase placeholder="search..." />
         </Search>
         <Icons>
-          <Badge badgeContent={4} color="primary">
-            <MailIcon sx={{ width:'max-width'}} />
+          <Badge badgeContent={4} color="error">
+            <MailIcon />
           </Badge>
+
+          <Badge badgeContent={2} onClick={(e) => setOpen(true)}  color="error">
+            <Notifications />
+          </Badge>
+
         </Icons>
+        <UserBox>
+          <Typography variant="span">Hi, Franklin</Typography>
+        </UserBox>
       </StyledToolBar>
+
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        open={open}
+        onClose ={e => setOpen(false)}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <MenuItem>Profile</MenuItem>
+        <MenuItem>My account</MenuItem>
+        <MenuItem>Logout</MenuItem>
+      </Menu>
     </AppBar>
   );
 }
